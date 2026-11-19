@@ -117,7 +117,7 @@ The dataset shows that there are enough observations for each session type. Prac
 | Race         | 117     |
 | **Total**    | **480** |
 
-### Circuit counts
+**Circuit counts**
 
 Looking at the instances of flag counts per location type indicates that we have more observations for some locations than others. This may pose a bias issue since there are more instances for locations such as Sakhir than Madring. 
 
