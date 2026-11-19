@@ -150,5 +150,24 @@ Looking at the instances of flag counts per location type indicates that we have
 | Madring | 5 |
 | Kuala Lumpur | 5 |
 
+Add the links to the EDA plots here
 
+
+### What the Inital Fit Says
+Our initial fit of the data using the following predictors:
+- Rainfall
+- Air Temperature
+- Humidity
+- Wind Speed
+- Pressure
+- Track Temperature
+- Wind Direction
+- Lap Length (km)
+- Laps
+- Total Track Length
+- Circut Name
+- Session Type
+- Track Type
+
+Gave an RMSE value of 8.43, and an R^2 of 0.096. These values indicate that the inital model fit performs poorly. In seeking out to predict the number of yellow flag instances that will ocurr in a given Formula-1 event, our model is about 8-9 flag estimates off from the true flag value. Considering the research question, this initial model needs to be altered. 
 
