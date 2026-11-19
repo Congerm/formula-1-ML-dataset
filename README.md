@@ -108,4 +108,14 @@ direction (0.09), and rainfall (0.09).
   predictors do not lift performance, we will reduce scope to Race sessions
   only or try a transformed response (e.g., log of `yellow_flag_count`).
 
+### Evidence So Far
+The dataset shows that there are enough observations for each session type. Practice sessions account for 51% of the data while both qualifying and races each contain 24% of the observations. While the practice sessions do account for half of the data, this does not indicate an extreme class imbalance.
+| Session Type | Count   |
+| ------------ | ------- |
+| Practice     | 246     |
+| Qualifying   | 117     |
+| Race         | 117     |
+| **Total**    | **480** |
+
+
 
