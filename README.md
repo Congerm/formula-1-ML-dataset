@@ -117,5 +117,38 @@ The dataset shows that there are enough observations for each session type. Prac
 | Race         | 117     |
 | **Total**    | **480** |
 
+### Circuit counts
+
+Looking at the instances of flag counts per location type indicates that we have more observations for some locations than others. This may pose a bias issue since there are more instances for locations such as Sakhir than Madring. 
+
+| Circuit | Count |
+|---|---:|
+| Sakhir | 35 |
+| Jeddah | 20 |
+| Melbourne | 20 |
+| Baku | 20 |
+| Miami | 20 |
+| Monte Carlo | 20 |
+| Catalunya | 20 |
+| Montreal | 20 |
+| Spielberg | 20 |
+| Silverstone | 20 |
+| Hungaroring | 20 |
+| Spa-Francorchamps | 20 |
+| Zandvoort | 20 |
+| Monza | 20 |
+| Singapore | 20 |
+| Suzuka | 20 |
+| Austin | 20 |
+| Mexico City | 20 |
+| Interlagos | 20 |
+| Imola | 15 |
+| Lusail | 15 |
+| Las Vegas | 15 |
+| Yas Marina Circuit | 15 |
+| Shanghai | 15 |
+| Madring | 5 |
+| Kuala Lumpur | 5 |
+
 
 
