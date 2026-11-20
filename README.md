@@ -29,7 +29,7 @@ Here is a quick overview of the dataset:
 | Response variable | `yellow_flag_count` |
 | Response range | 0–84 |
 
-**Full dataset:** [`sessions_with_weather_and_yellow_flags.csv`](sessions_with_weather_and_yellow_flags.csv)
+**Full dataset:** [`sessions_with_weather_and_yellow_flags.csv`](DATA/sessions_with_weather_and_yellow_flags.csv)
 
 
 
@@ -108,14 +108,18 @@ direction (0.09), and rainfall (0.09).
   predictors do not lift performance, we will reduce scope to Race sessions
   only or try a transformed response (e.g., log of `yellow_flag_count`).
 
+## Checkpoint 4: Evidence and interpretation
+
+**Date:** November 19, 2026
+
 ### Evidence So Far
 The dataset shows that there are enough observations for each session type. Practice sessions account for 51% of the data while both qualifying and races each contain 24% of the observations. While the practice sessions do account for half of the data, this does not indicate an extreme class imbalance.
 | Session Type | Count   |
 | ------------ | ------- |
 | Practice     | 246     |
 | Qualifying   | 117     |
-| Race         | 117     |
-| **Total**    | **480** |
+| Race         | 116     |
+| **Total**    | **479** |
 
 **Circuit counts**
 
@@ -148,9 +152,13 @@ Looking at the instances of flag counts per location type indicates that we have
 | Yas Marina Circuit | 15 |
 | Shanghai | 15 |
 | Madring | 5 |
-| Kuala Lumpur | 5 |
+| Kuala Lumpur | 4 |
 
-Add the links to the EDA plots here
+EDA plots: [`EDA.ipynb`](EDA.ipynb) — flag-count histogram, boxplots by circuit, track type, and session type, and rainfall/lap-length scatterplots.
+
+**Other data-quality checks.** We also discovered that the OpenF1 sessions endpoint returns future calendar placeholders, 139 rows (22% of the initial pull) with zero's for weather and flags, including the whole 2027 schedule. Dropping sessions whose `date_end` is after the collection date leaves 480 real sessions with no missing feature values and full coverage of the circuit length/type join. The response remains heavily right-skewed (0–44 flags per session). Evidence: [`combine_flag_on_track.py`](DATA/combine_flag_on_track.py) join output and the filtering cell in [`initial_fit.ipynb`](initial_fit.ipynb).
+
+**Outlier removal.** We dropped the October 4, 2026 Sepang race. It was a real but abnormal event (rain delays, an FIA software glitch, and a red flag produced 84 yellow flags, over double the next-highest session) — leaving 479 sessions and improving the refit to RMSE 4.647, R² 0.136 ([`initial_fit.ipynb`](initial_fit.ipynb)).
 
 
 ### What the Inital Fit Says
@@ -171,4 +179,20 @@ Our initial fit of the data using the following predictors:
 
 Gave an RMSE value of 8.43, and an $R^2$ of 0.096. These values indicate that the inital model fit performs poorly. In seeking out to predict the number of yellow flag instances that will ocurr in a given Formula-1 event, our model is about 8-9 flag estimates off from the true flag value. Considering the research question, this initial model needs to be altered. 
 
-Link the code output for the initial fit here.
+Code and output: [`initial_fit.ipynb`](initial_fit.ipynb).
+
+**Baseline comparison.** Against a mean baseline (`DummyRegressor`: RMSE 5.000, MAE 3.673, R² −0.000 on the same 75/25 split), the forest improves RMSE to 4.647 and MAE to 3.301, but R² of 0.136 means session-level aggregates still explain only about a tenth of the variance.
+
+### Interpretation and next step
+
+**Informative limitation.** The most important feature is the Baku circuit indicator (importance 0.19), ahead of any weather variable (track temperature is next). This means some of the model's prediction comes from memorizing the location of a session, not from the weather conditions or other factors.
+
+**What the evidence changed.** Our original plan assumed weather would be a primary predictor. However, from what we have seen, the weather features are not huge contributors to predicting yellow flags, and a lot of the variance comes from other factors, some of which we do not have data for.
+
+Next we will:
+
+1. re-run the forest without the circuit indicators and compare R² against this 0.136 baseline on the same split.
+
+2. if gains remain small, try a Race-sessions-only model or a transformed response, and report results with cross-validation rather than a single split.
+
+3. if it still remains small, we will try to look at other data sources or features that might capture the underlying patterns better.
